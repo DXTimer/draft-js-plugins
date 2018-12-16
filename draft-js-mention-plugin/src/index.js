@@ -89,6 +89,7 @@ export default (config = {}) => {
   // breaking change. 1px of an increased padding can break a whole layout.
   const {
     mentionPrefix = '',
+    productMentionPrefix = '',
     theme = defaultTheme,
     positionSuggestions = defaultPositionSuggestions,
     mentionComponent,
@@ -97,6 +98,7 @@ export default (config = {}) => {
     mentionTrigger = '@',
     mentionRegExp = defaultRegExp,
     supportWhitespace = false,
+    modifierType = 'default'
   } = config;
   const mentionSearchProps = {
     ariaProps,
@@ -107,6 +109,8 @@ export default (config = {}) => {
     positionSuggestions,
     mentionTrigger,
     mentionPrefix,
+    productMentionPrefix,
+    modifierType,
   };
   return {
     MentionSuggestions: decorateComponentWithProps(mentionSuggestionsComponent, mentionSearchProps),

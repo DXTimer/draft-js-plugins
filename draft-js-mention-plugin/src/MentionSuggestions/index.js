@@ -4,6 +4,7 @@ import { genKey } from 'draft-js';
 import escapeRegExp from 'lodash.escaperegexp';
 import Entry from './Entry';
 import addMention from '../modifiers/addMention';
+import addProductMention from '../modifiers/addProductMention';
 import decodeOffsetKey from '../utils/decodeOffsetKey';
 import getSearchText from '../utils/getSearchText';
 import defaultEntryComponent from './Entry/defaultEntryComponent';
@@ -18,6 +19,10 @@ export class MentionSuggestions extends Component {
     entryComponent: PropTypes.func,
     onAddMention: PropTypes.func,
     suggestions: PropTypes.array,
+    modifierType: PropTypes.oneOf([
+      'default',
+      'product',
+    ]),
   };
 
   state = {
@@ -225,13 +230,27 @@ export class MentionSuggestions extends Component {
     }
 
     this.closeDropdown();
-    const newEditorState = addMention(
-      this.props.store.getEditorState(),
-      mention,
-      this.props.mentionPrefix,
-      this.props.mentionTrigger,
-      this.props.entityMutability,
-    );
+    let newEditorState;
+
+    if (this.props.modifierType === 'default') {
+      newEditorState = addMention(
+        this.props.store.getEditorState(),
+        mention,
+        this.props.mentionPrefix,
+        this.props.mentionTrigger,
+        this.props.entityMutability,
+      );
+    }
+
+    if (this.props.modifierType === 'product') {
+      newEditorState = addProductMention(
+        this.props.store.getEditorState(),
+        mention,
+        this.props.productMentionPrefix,
+        this.props.mentionTrigger,
+        this.props.entityMutability,
+      );
+    }
     this.props.store.setEditorState(newEditorState);
   };
 
@@ -321,6 +340,7 @@ export class MentionSuggestions extends Component {
       positionSuggestions, // eslint-disable-line no-unused-vars
       mentionTrigger, // eslint-disable-line no-unused-vars
       mentionPrefix, // eslint-disable-line no-unused-vars
+      productMentionPrefix, // eslint-disable-line no-unused-vars
       ...elementProps } = this.props;
 
     return React.cloneElement(

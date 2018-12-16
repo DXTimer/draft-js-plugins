@@ -1,8 +1,28 @@
 # DraftJS Mention Plugin
 
+*This is a fork of the original `draft-js-mention-plugin`*
 *This is a plugin for the `draft-js-plugins-editor`.*
 
 This plugin allows you to add mentions to your editor!
+
+Modifications:
+
+This fork provides @kultii specific alternatives on how to handle the mentions, through custom modifiers.
+
+Now the mention plugin can take two more configuration options that dictates which modifier should be used.
+
+*modifierType* can be either _default_ or _product_
+
+#### Example
+
+```js
+    this.mentionPlugin = createMentionPlugin({
+      mentionComponent: mentionComponent,
+      modifierType: 'product',
+      productMentionPrefix: '@',
+    });
+```
+
 
 Usage:
 
