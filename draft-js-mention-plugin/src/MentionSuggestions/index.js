@@ -319,6 +319,16 @@ export class MentionSuggestions extends Component {
     }
   };
 
+  getEntryKey = (mention) => {
+    if (mention.id != null) {
+      return mention.id;
+    } else if (mention.name != null) {
+      return mention.name;
+    } else {
+      return mention._source.slug;
+    }
+  };
+
   render() {
     if (!this.state.isActive) {
       return null;
@@ -340,6 +350,7 @@ export class MentionSuggestions extends Component {
       positionSuggestions, // eslint-disable-line no-unused-vars
       mentionTrigger, // eslint-disable-line no-unused-vars
       mentionPrefix, // eslint-disable-line no-unused-vars
+      modifierType, // eslint-disable-line no-unused-vars
       productMentionPrefix, // eslint-disable-line no-unused-vars
       ...elementProps } = this.props;
 
@@ -354,7 +365,7 @@ export class MentionSuggestions extends Component {
       },
       this.props.suggestions.map((mention, index) => (
         <Entry
-          key={mention.id != null ? mention.id : mention.name}
+          key={this.getEntryKey(mention)}
           onMentionSelect={this.onMentionSelect}
           onMentionFocus={this.onMentionFocus}
           isFocused={this.state.focusedOptionIndex === index}
