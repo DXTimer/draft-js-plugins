@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.0.3 - 2019-01-26
+Reverting back to Alpha status, due to the zero guarantee on the newly added behaviour
+- Changed the expected mention attributes, to `mention.name` and `mention.slug`.
+
 ## 3.1.3
 - Force update regex's `lastIndex` to avoid infinite loop
 - Fixed replace issue while `mentionTrigger` is empty

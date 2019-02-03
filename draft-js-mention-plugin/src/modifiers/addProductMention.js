@@ -20,7 +20,7 @@ const addProductMention = (editorState, mention, productMentionPrefix, mentionTr
   let mentionReplacedContent = Modifier.replaceText(
     editorState.getCurrentContent(),
     mentionTextSelection,
-    `[${mention.text}](${mention._source.slug})`,
+    `[${mention.name}](/products/${mention.slug})`,
     null, // no inline style needed
     entityKey
   );
