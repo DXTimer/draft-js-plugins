@@ -1,15 +1,23 @@
 .blockType {
   box-sizing: border-box;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(0,0,0,.68);
   background: #fff;
   padding: 5px;
   margin: 0;
-  border-radius: 18px;
+  border-radius: 25%;
   cursor: pointer;
   height: 36px;
   width: 36px;
   line-height: 36px;
   text-align: center;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.blockType:focus {
+  outline: 0;
 }
 
 .blockType svg {
@@ -61,4 +69,23 @@
   border-bottom-color: #ddd;
   border-width: 6px;
   margin-left: -6px;
+}
+
+.inlineToolbar {
+  position: relative;
+  display: flex;
+  padding-left: 10px;
+}
+
+.inlineToolbar.isActive {
+  -webkit-transition: visibility 0s linear 0s,opacity .1s,width 0s linear 0s;
+  transition: visibility 0s linear 0s,opacity .1s,width 0s linear 0s;
+  visibility: visible;
+  opacity: 1;
+}
+
+.blockWrapper {
+  display: flex;
+  flex-direction: row;
+  position: relative;
 }

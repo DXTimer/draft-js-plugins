@@ -42,10 +42,12 @@ class Toolbar extends React.Component {
     this.props.store.unsubscribeFromItem('editorState', this.onEditorStateChange);
   }
 
-
   onEditorStateChange = (editorState) => {
     const selection = editorState.getSelection();
-    if (!selection.getHasFocus()) {
+    const currentContent = editorState.getCurrentContent();
+    const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
+    // !selection.getHasFocus() ||
+    if (!selection.getHasFocus() || (currentBlock.getLength() !== 0)) {
       this.setState({
         position: {
           transform: 'scale(0)',
@@ -54,8 +56,6 @@ class Toolbar extends React.Component {
       return;
     }
 
-    const currentContent = editorState.getCurrentContent();
-    const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
     // TODO verify that always a key-0-0 exists
     const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
     // Note: need to wait on tick to make sure the DOM node has been create by Draft.js
@@ -66,7 +66,7 @@ class Toolbar extends React.Component {
       // `getEditorRef`. In case this changes in the future, we
       // attempt to find the node dynamically by traversing upwards.
       const editorRef = this.props.store.getItem('getEditorRef')();
-      if (!editorRef) return;
+      if (!editorRef || (currentBlock.getLength() !== 0)) return;
 
       // this keeps backwards-compatibility with react 15
       let editorRoot = editorRef.refs && editorRef.refs.editor
@@ -78,7 +78,8 @@ class Toolbar extends React.Component {
       const position = {
         top: node.offsetTop + editorRoot.offsetTop,
         transform: 'scale(1)',
-        transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
+        // transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
+        transition: 'all .2s ease',
       };
       // TODO: remove the hard code(width for the hover element)
       if (this.props.position === 'right') {
