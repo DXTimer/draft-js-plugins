@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { getVisibleSelectionRect } from 'draft-js';
+import { getSelectedBlocksList } from 'draftjs-utils';
 import {
   ItalicButton,
   BoldButton,
@@ -97,7 +98,9 @@ export default class Toolbar extends React.Component {
     const selection = store.getItem('getEditorState')().getSelection();
     // overrideContent could for example contain a text input, hence we always show overrideContent
     // TODO: Test readonly mode and possibly set isVisible to false if the editor is readonly
-    const isVisible = (!selection.isCollapsed() && selection.getHasFocus()) || overrideContent;
+    const currentSelectionContentBlocks = getSelectedBlocksList(store.getItem('getEditorState')());
+    const isHeading = currentSelectionContentBlocks.some((block) => block.getType() === 'header-one');
+    const isVisible = (!isHeading && !selection.isCollapsed() && selection.getHasFocus()) || overrideContent;
     const style = { ...position };
 
     if (isVisible) {
