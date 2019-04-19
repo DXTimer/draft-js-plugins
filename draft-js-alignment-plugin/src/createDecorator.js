@@ -7,8 +7,16 @@ const getDisplayName = (WrappedComponent) => {
 };
 
 export default ({ store }) => (WrappedComponent) => class BlockAlignmentDecorator extends Component {
-  static displayName = `BlockDraggable(${getDisplayName(WrappedComponent)})`;
+  static displayName = `BlockDraggable(Image)`;
   static WrappedComponent = WrappedComponent.WrappedComponent || WrappedComponent;
+
+  state = {
+    isMounted: true
+  }
+
+  componentDidMount = () => {
+    this.setState({ isMounted: true });
+  }
 
   componentDidUpdate = () => {
     if (this.props.blockProps.isFocused && this.props.blockProps.isCollapsedSelection) {
@@ -30,7 +38,8 @@ export default ({ store }) => (WrappedComponent) => class BlockAlignmentDecorato
 
   componentWillUnmount() {
     // Set visibleBlock to null if the block is deleted
-    store.updateItem('visibleBlock', null);
+    this.setState({ isMounted: false });
+    // store.updateItem('visibleBlock', null);
   }
 
   render() {

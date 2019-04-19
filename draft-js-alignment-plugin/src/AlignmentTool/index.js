@@ -1,10 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import {
-  AlignBlockDefaultButton,
   AlignBlockLeftButton,
   AlignBlockCenterButton,
-  AlignBlockRightButton,
 } from 'draft-js-buttons';
 
 const getRelativeParent = (element) => {
@@ -50,7 +48,7 @@ export default class AlignmentTool extends React.Component {
         const toolbarHeight = this.toolbar.clientHeight;
         const relativeRect = relativeParent ? relativeParent.getBoundingClientRect() : document.body.getBoundingClientRect();
         position = {
-          top: (boundingRect.top - relativeRect.top) - toolbarHeight,
+          top: (boundingRect.top - relativeRect.top) - toolbarHeight - 10,
           left: (boundingRect.left - relativeRect.left) + (boundingRect.width / 2),
           transform: 'translate(-50%) scale(1)',
           transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
@@ -58,7 +56,7 @@ export default class AlignmentTool extends React.Component {
       } else {
         position = { transform: 'translate(-50%) scale(0)' };
       }
-      const alignment = this.props.store.getItem('alignment') || 'default';
+      const alignment = this.props.store.getItem('alignment') || 'center';
       this.setState({
         alignment,
         position,
@@ -74,10 +72,8 @@ export default class AlignmentTool extends React.Component {
 
   render() {
     const defaultButtons = [
-      AlignBlockDefaultButton,
       AlignBlockLeftButton,
       AlignBlockCenterButton,
-      AlignBlockRightButton,
     ];
 
     const { theme } = this.props;
