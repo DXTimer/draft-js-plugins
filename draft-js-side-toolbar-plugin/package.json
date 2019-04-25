@@ -1,6 +1,6 @@
 {
   "name": "@kultii/draft-js-side-toolbar-plugin",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "Forked version of Toolbar Plugin for DraftJS",
   "author": {
     "name": "Benjamin Kniffler",
