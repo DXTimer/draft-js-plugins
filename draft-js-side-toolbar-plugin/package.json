@@ -1,14 +1,14 @@
 {
-  "name": "draft-js-side-toolbar-plugin",
+  "name": "@kultii/draft-js-side-toolbar-plugin",
   "version": "3.0.1",
-  "description": "Toolbar Plugin for DraftJS",
+  "description": "Forked version of Toolbar Plugin for DraftJS",
   "author": {
     "name": "Benjamin Kniffler",
     "email": "benjamin@kniffler.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/draft-js-plugins/draft-js-plugins.git"
+    "url": "https://github.com/DXTimer/draft-js-plugins.git"
   },
   "main": "lib/index.js",
   "keywords": [

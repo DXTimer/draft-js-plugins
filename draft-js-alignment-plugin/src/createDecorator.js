@@ -39,7 +39,7 @@ export default ({ store }) => (WrappedComponent) => class BlockAlignmentDecorato
   componentWillUnmount() {
     // Set visibleBlock to null if the block is deleted
     this.setState({ isMounted: false });
-    // store.updateItem('visibleBlock', null);
+    store.updateItem('visibleBlock', null);
   }
 
   render() {
@@ -50,20 +50,21 @@ export default ({ store }) => (WrappedComponent) => class BlockAlignmentDecorato
       ...elementProps
     } = this.props;
     const alignment = blockProps.alignment;
-    let newStyle = style;
-    if (alignment === 'left') {
-      newStyle = { ...style, float: 'left' };
-    } else if (alignment === 'right') {
-      newStyle = { ...style, float: 'right' };
-    } else if (alignment === 'center') {
-      newStyle = { ...style, marginLeft: 'auto', marginRight: 'auto', display: 'block' };
-    }
+    // let newStyle = style;
+    // if (alignment === 'left') {
+    //   newStyle = { ...style, float: 'left' };
+    // } else if (alignment === 'right') {
+    //   newStyle = { ...style, float: 'right' };
+    // } else if (alignment === 'center') {
+    //   newStyle = { ...style, marginLeft: 'auto', marginRight: 'auto', display: 'block' };
+    // }
 
     return (
       <WrappedComponent
         {...elementProps}
         blockProps={blockProps}
-        style={newStyle}
+        // style={newStyle}
+        className={`alignment--${alignment}`}
       />
     );
   }

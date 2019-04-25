@@ -24,6 +24,7 @@ class BlockTypeSelect extends React.Component {
     this.setState({
       style: {
         transform: 'scale(0)',
+        isExpanded: !this.state.isExpanded
       },
     });
   }
@@ -72,7 +73,7 @@ class BlockTypeSelect extends React.Component {
     return (
       <div
         // onMouseEnter={this.onMouseEnter}
-        // onMouseLeave={this.onMouseLeave}
+        onMouseLeave={this.onMouseLeave}
         // onMouseDown={this.onMouseDown}
         className={theme.blockTypeSelectStyles.blockWrapper}
       >
