@@ -8,7 +8,6 @@ class BlockTypeSelect extends React.Component {
     style: {
       transform: 'translate(-50%) scale(0)',
     },
-    isExpanded: false,
   }
 
   onMouseEnter = () => {
@@ -24,7 +23,6 @@ class BlockTypeSelect extends React.Component {
     this.setState({
       style: {
         transform: 'scale(0)',
-        isExpanded: !this.state.isExpanded
       },
     });
   }
@@ -33,7 +31,7 @@ class BlockTypeSelect extends React.Component {
     clickEvent.preventDefault();
     clickEvent.stopPropagation();
     let style;
-    if (!this.state.isExpanded) {
+    if (!this.props.isExpanded) {
       style = {
         transform: 'scale(1)',
         transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
@@ -45,13 +43,13 @@ class BlockTypeSelect extends React.Component {
     }
     this.setState({
       style,
-      isExpanded: !this.state.isExpanded
     });
+    this.props.onExpand();
   }
 
-  onClick = (clickEvent) => {
+  onClick = () => {
     let style;
-    if (!this.state.isExpanded) {
+    if (!this.props.isExpanded) {
       style = {
         transform: 'scale(1)',
         transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
@@ -63,8 +61,8 @@ class BlockTypeSelect extends React.Component {
     }
     this.setState({
       style,
-      isExpanded: !this.state.isExpanded
     });
+    this.props.onExpand();
   }
 
   render() {
@@ -73,7 +71,7 @@ class BlockTypeSelect extends React.Component {
     return (
       <div
         // onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
+        // onMouseLeave={this.onMouseLeave}
         // onMouseDown={this.onMouseDown}
         className={theme.blockTypeSelectStyles.blockWrapper}
       >
@@ -87,21 +85,23 @@ class BlockTypeSelect extends React.Component {
           blockType div to the popup.
         */}
         {/* <div className={theme.blockTypeSelectStyles.spacer} /> */}
-        <div className={theme.blockTypeSelectStyles.inlineToolbar || 'inlineToolbar'} style={this.state.style}>
+        { this.props.isExpanded && <div className={theme.blockTypeSelectStyles.inlineToolbar || 'inlineToolbar'} style={this.state.style}>
           {this.props.children({
             getEditorState,
             setEditorState,
             theme: theme.buttonStyles,
             onClick: this.onClick
           })}
-        </div>
+        </div> }
       </div>
     );
   }
 }
 
 BlockTypeSelect.propTypes = {
-  children: PropTypes.func
+  children: PropTypes.func,
+  isExpanded: PropTypes.bool,
+  onExpand: PropTypes.func,
 };
 
 export default BlockTypeSelect;

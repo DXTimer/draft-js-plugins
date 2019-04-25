@@ -16,14 +16,13 @@ class Toolbar extends React.Component {
 
   static defaultProps = {
     children: (externalProps) => (
-      // may be use React.Fragment instead of div to improve perfomance after React 16
       <div>
-        <HeadlineOneButton {...externalProps} />
-        <HeadlineTwoButton {...externalProps} />
-        <BlockquoteButton {...externalProps} />
-        <CodeBlockButton {...externalProps} />
-        <UnorderedListButton {...externalProps} />
-        <OrderedListButton {...externalProps} />
+        <HeadlineOneButton onMouseDown={externalProps.onClick} {...externalProps} />
+        <HeadlineTwoButton onMouseDown={externalProps.onClick} {...externalProps} />
+        <BlockquoteButton onMouseDown={externalProps.onClick} {...externalProps} />
+        <CodeBlockButton onMouseDown={externalProps.onClick} {...externalProps} />
+        <UnorderedListButton onMouseDown={externalProps.onClick} {...externalProps} />
+        <OrderedListButton onMouseDown={externalProps.onClick} {...externalProps} />
       </div>
     )
   }
@@ -31,7 +30,8 @@ class Toolbar extends React.Component {
   state = {
     position: {
       transform: 'scale(0)',
-    }
+    },
+    isExpanded: false,
   }
 
   componentDidMount() {
@@ -46,12 +46,12 @@ class Toolbar extends React.Component {
     const selection = editorState.getSelection();
     const currentContent = editorState.getCurrentContent();
     const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
-    // !selection.getHasFocus() ||
     if (!selection.getHasFocus() || (currentBlock.getLength() !== 0)) {
       this.setState({
         position: {
           transform: 'scale(0)',
         },
+        isExpanded: false
       });
       return;
     }
@@ -76,7 +76,7 @@ class Toolbar extends React.Component {
       }
 
       const position = {
-        top: node.offsetTop + editorRoot.offsetTop,
+        top: (node.offsetTop + editorRoot.offsetTop) - 6,
         transform: 'scale(1)',
         // transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
         transition: 'all .2s ease',
@@ -86,7 +86,7 @@ class Toolbar extends React.Component {
         // eslint-disable-next-line no-mixed-operators
         position.left = editorRoot.offsetLeft + editorRoot.offsetWidth + 80 - 36;
       } else {
-        position.left = editorRoot.offsetLeft - 80;
+        position.left = editorRoot.offsetLeft - 64;
       }
 
 
@@ -96,8 +96,13 @@ class Toolbar extends React.Component {
     }, 0);
   }
 
+  handleBlockExpand = () => {
+    this.setState({ isExpanded: !this.state.isExpanded });
+  }
+
   render() {
     const { theme, store } = this.props;
+    const { isExpanded } = this.state;
 
     return (
       <div
@@ -107,6 +112,8 @@ class Toolbar extends React.Component {
         <BlockTypeSelect
           getEditorState={store.getItem('getEditorState')}
           setEditorState={store.getItem('setEditorState')}
+          isExpanded={isExpanded}
+          onExpand={this.handleBlockExpand}
           theme={theme}
         >
           {this.props.children}
