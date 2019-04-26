@@ -77,7 +77,7 @@ class BlockTypeSelect extends React.Component {
       >
         <div className={theme.blockTypeSelectStyles.blockType} onMouseDown={this.onMouseDown}>
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.2143 21.2143V0.785714C10.2143 -0.261905 11.7857 -0.261905 11.7857 0.785714V21.2143C11.7857 22.2619 10.2143 22.2619 10.2143 21.2143ZM21.2143 11.7857H0.785714C-0.261905 11.7857 -0.261905 10.2143 0.785714 10.2143H21.2143C22.2619 10.2143 22.2619 11.7857 21.2143 11.7857Z" fill="#202641"/>
+            <path d="M10.2143 21.2143V0.785714C10.2143 -0.261905 11.7857 -0.261905 11.7857 0.785714V21.2143C11.7857 22.2619 10.2143 22.2619 10.2143 21.2143ZM21.2143 11.7857H0.785714C-0.261905 11.7857 -0.261905 10.2143 0.785714 10.2143H21.2143C22.2619 10.2143 22.2619 11.7857 21.2143 11.7857Z" fill="#202641" />
           </svg>
         </div>
         {/*
@@ -85,7 +85,7 @@ class BlockTypeSelect extends React.Component {
           blockType div to the popup.
         */}
         {/* <div className={theme.blockTypeSelectStyles.spacer} /> */}
-        { this.props.isExpanded && <div className={theme.blockTypeSelectStyles.inlineToolbar || 'inlineToolbar'} style={this.state.style}>
+        { <div className={theme.blockTypeSelectStyles.inlineToolbar || 'inlineToolbar'} style={this.props.isExpanded ? this.state.style : { transform: 'scale(0)' } } >
           {this.props.children({
             getEditorState,
             setEditorState,

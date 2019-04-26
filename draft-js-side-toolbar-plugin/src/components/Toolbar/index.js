@@ -66,7 +66,10 @@ class Toolbar extends React.Component {
       // `getEditorRef`. In case this changes in the future, we
       // attempt to find the node dynamically by traversing upwards.
       const editorRef = this.props.store.getItem('getEditorRef')();
-      if (!editorRef || (currentBlock.getLength() !== 0)) return;
+      if (!editorRef || (currentBlock.getLength() !== 0)) {
+        return;
+      }
+      this.setState({ isExpanded: false });
 
       // this keeps backwards-compatibility with react 15
       let editorRoot = editorRef.refs && editorRef.refs.editor
