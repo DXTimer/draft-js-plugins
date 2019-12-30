@@ -28,7 +28,7 @@ const head = `<meta charset="utf-8"/>
 
 const Html = ({
   bundle = '/app.js',
-  body = ''
+  body = '',
   // favicon = 'favicon.ico',
 }) => (
   <html lang="en">

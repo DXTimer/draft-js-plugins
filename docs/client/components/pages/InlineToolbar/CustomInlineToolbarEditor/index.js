@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 
-import createInlineToolbarPlugin, { Separator } from 'draft-js-inline-toolbar-plugin';
+import createInlineToolbarPlugin, {
+  Separator,
+} from 'draft-js-inline-toolbar-plugin';
 import {
   ItalicButton,
   BoldButton,
@@ -19,10 +21,11 @@ import {
 } from 'draft-js-buttons';
 import editorStyles from './editorStyles.css';
 
-
 class HeadlinesPicker extends Component {
   componentDidMount() {
-    setTimeout(() => { window.addEventListener('click', this.onWindowClick); });
+    setTimeout(() => {
+      window.addEventListener('click', this.onWindowClick);
+    });
   }
 
   componentWillUnmount() {
@@ -38,9 +41,12 @@ class HeadlinesPicker extends Component {
     const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
     return (
       <div>
-        {buttons.map((Button, i) => // eslint-disable-next-line
+        {buttons.map((
+          Button,
+          i // eslint-disable-next-line
+        ) => (
           <Button key={i} {...this.props} />
-        )}
+        ))}
       </div>
     );
   }
@@ -50,7 +56,7 @@ class HeadlinesButton extends Component {
   // When using a click event inside overridden content, mouse down
   // events needs to be prevented so the focus stays in the editor
   // and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
-  onMouseDown = (event) => event.preventDefault()
+  onMouseDown = event => event.preventDefault();
 
   onClick = () =>
     // A button can call `onOverrideContent` to replace the content
@@ -60,7 +66,10 @@ class HeadlinesButton extends Component {
 
   render() {
     return (
-      <div onMouseDown={this.onMouseDown} className={editorStyles.headlineButtonWrapper}>
+      <div
+        onMouseDown={this.onMouseDown}
+        className={editorStyles.headlineButtonWrapper}
+      >
         <button onClick={this.onClick} className={editorStyles.headlineButton}>
           H
         </button>
@@ -72,15 +81,15 @@ class HeadlinesButton extends Component {
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [inlineToolbarPlugin];
-const text = 'In this editor a toolbar shows up once you select part of the text …';
+const text =
+  'In this editor a toolbar shows up once you select part of the text …';
 
 export default class CustomInlineToolbarEditor extends Component {
-
   state = {
     editorState: createEditorStateWithText(text),
   };
 
-  onChange = (editorState) => {
+  onChange = editorState => {
     this.setState({
       editorState,
     });
@@ -97,26 +106,26 @@ export default class CustomInlineToolbarEditor extends Component {
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
-          ref={(element) => { this.editor = element; }}
+          ref={element => {
+            this.editor = element;
+          }}
         />
         <InlineToolbar>
-          {
-            // may be use React.Fragment instead of div to improve perfomance after React 16
-            (externalProps) => (
-              <div>
-                <BoldButton {...externalProps} />
-                <ItalicButton {...externalProps} />
-                <UnderlineButton {...externalProps} />
-                <CodeButton {...externalProps} />
-                <Separator {...externalProps} />
-                <HeadlinesButton {...externalProps} />
-                <UnorderedListButton {...externalProps} />
-                <OrderedListButton {...externalProps} />
-                <BlockquoteButton {...externalProps} />
-                <CodeBlockButton {...externalProps} />
-              </div>
-            )
-          }
+          {// may be use React.Fragment instead of div to improve perfomance after React 16
+          externalProps => (
+            <div>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+              <UnderlineButton {...externalProps} />
+              <CodeButton {...externalProps} />
+              <Separator {...externalProps} />
+              <HeadlinesButton {...externalProps} />
+              <UnorderedListButton {...externalProps} />
+              <OrderedListButton {...externalProps} />
+              <BlockquoteButton {...externalProps} />
+              <CodeBlockButton {...externalProps} />
+            </div>
+          )}
         </InlineToolbar>
       </div>
     );

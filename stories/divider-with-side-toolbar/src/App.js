@@ -26,8 +26,8 @@ const initialState = {
     '0': {
       type: 'divider',
       mutability: 'IMMUTABLE',
-      data: {}
-    }
+      data: {},
+    },
   },
   blocks: [
     {
@@ -38,7 +38,7 @@ const initialState = {
       depth: 0,
       inlineStyleRanges: [],
       entityRanges: [],
-      data: {}
+      data: {},
     },
     {
       key: 'ov7r',
@@ -50,23 +50,23 @@ const initialState = {
         {
           offset: 0,
           length: 1,
-          key: 0
-        }
+          key: 0,
+        },
       ],
-      data: {}
-    }
-  ]
+      data: {},
+    },
+  ],
 };
 /* eslint-enable */
 
 export default class CustomImageEditor extends Component {
   state = {
-    editorState: EditorState.createWithContent(convertFromRaw(initialState))
+    editorState: EditorState.createWithContent(convertFromRaw(initialState)),
   };
 
-  onChange = (editorState) => {
+  onChange = editorState => {
     this.setState({
-      editorState
+      editorState,
     });
   };
 
@@ -81,20 +81,18 @@ export default class CustomImageEditor extends Component {
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
-          ref={(element) => {
+          ref={element => {
             this.editor = element;
           }}
         />
 
         <SideToolbar>
-          {
-            // may be use React.Fragment instead of div to improve perfomance after React 16
-            (externalProps) => (
-              <div>
-                <DividerButton {...externalProps} />
-              </div>
-            )
-          }
+          {// may be use React.Fragment instead of div to improve perfomance after React 16
+          externalProps => (
+            <div>
+              <DividerButton {...externalProps} />
+            </div>
+          )}
         </SideToolbar>
       </div>
     );

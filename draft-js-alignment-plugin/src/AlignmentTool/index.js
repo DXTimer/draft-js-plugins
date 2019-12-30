@@ -1,11 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import {
-  AlignBlockLeftButton,
-  AlignBlockCenterButton,
-} from 'draft-js-buttons';
+import { AlignBlockLeftButton, AlignBlockCenterButton } from 'draft-js-buttons';
 
-const getRelativeParent = (element) => {
+const getRelativeParent = element => {
   if (!element) {
     return null;
   }
@@ -26,7 +23,7 @@ export default class AlignmentTool extends React.Component {
     alignment: null,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.store.subscribeToItem('visibleBlock', this.onVisibilityChanged);
     this.props.store.subscribeToItem('alignment', this.onAlignmentChange);
   }
@@ -34,22 +31,24 @@ export default class AlignmentTool extends React.Component {
   componentWillUnmount() {
     this.props.store.unsubscribeFromItem(
       'visibleBlock',
-      this.onVisibilityChanged,
+      this.onVisibilityChanged
     );
     this.props.store.unsubscribeFromItem('alignment', this.onAlignmentChange);
   }
 
-  onVisibilityChanged = (visibleBlock) => {
+  onVisibilityChanged = visibleBlock => {
     setTimeout(() => {
       let position;
       const boundingRect = this.props.store.getItem('boundingRect');
       if (visibleBlock) {
         const relativeParent = getRelativeParent(this.toolbar.parentElement);
         const toolbarHeight = this.toolbar.clientHeight;
-        const relativeRect = relativeParent ? relativeParent.getBoundingClientRect() : document.body.getBoundingClientRect();
+        const relativeRect = relativeParent
+          ? relativeParent.getBoundingClientRect()
+          : document.body.getBoundingClientRect();
         position = {
-          top: (boundingRect.top - relativeRect.top) - toolbarHeight - 10,
-          left: (boundingRect.left - relativeRect.left) + (boundingRect.width / 2),
+          top: boundingRect.top - relativeRect.top - toolbarHeight - 10,
+          left: boundingRect.left - relativeRect.left + boundingRect.width / 2,
           transform: 'translate(-50%) scale(1)',
           transition: 'transform 0.15s cubic-bezier(.3,1.2,.2,1)',
         };
@@ -62,19 +61,16 @@ export default class AlignmentTool extends React.Component {
         position,
       });
     }, 0);
-  }
+  };
 
-  onAlignmentChange = (alignment) => {
+  onAlignmentChange = alignment => {
     this.setState({
       alignment,
     });
   };
 
   render() {
-    const defaultButtons = [
-      AlignBlockLeftButton,
-      AlignBlockCenterButton,
-    ];
+    const defaultButtons = [AlignBlockLeftButton, AlignBlockCenterButton];
 
     const { theme } = this.props;
 
@@ -82,7 +78,7 @@ export default class AlignmentTool extends React.Component {
       <div
         className={theme.alignmentToolStyles.alignmentTool}
         style={this.state.position}
-        ref={(toolbar) => {
+        ref={toolbar => {
           this.toolbar = toolbar;
         }}
       >

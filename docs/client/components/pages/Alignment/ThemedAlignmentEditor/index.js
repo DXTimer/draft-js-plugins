@@ -19,7 +19,7 @@ const { AlignmentTool } = alignmentPlugin;
 
 const decorator = composeDecorators(
   alignmentPlugin.decorator,
-  focusPlugin.decorator,
+  focusPlugin.decorator
 );
 
 const colorBlockPlugin = createColorBlockPlugin({ decorator });
@@ -79,7 +79,7 @@ export default class ThemedAlignmentEditor extends Component {
     editorState: EditorState.createWithContent(convertFromRaw(initialState)),
   };
 
-  onChange = (editorState) => {
+  onChange = editorState => {
     this.setState({
       editorState,
     });
@@ -97,7 +97,7 @@ export default class ThemedAlignmentEditor extends Component {
             editorState={this.state.editorState}
             onChange={this.onChange}
             plugins={plugins}
-            ref={(element) => {
+            ref={element => {
               this.editor = element;
             }}
           />

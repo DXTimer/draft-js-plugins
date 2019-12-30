@@ -1,25 +1,19 @@
-import decorateComponentWithProps from 'decorate-component-with-props';
+import React from 'react';
 import createStore from './utils/createStore';
 import Toolbar from './components/Toolbar';
 import Separator from './components/Separator';
-import buttonStyles from './buttonStyles.css';
-import toolbarStyles from './toolbarStyles.css';
+import { defaultTheme } from './theme.js';
 
 export default (config = {}) => {
-  const defaultTheme = { buttonStyles, toolbarStyles };
-
   const store = createStore({
     isVisible: false,
   });
 
-  const {
-    theme = defaultTheme
-  } = config;
+  const { theme = defaultTheme } = config;
 
-  const toolbarProps = {
-    store,
-    theme,
-  };
+  const InlineToolbar = props => (
+    <Toolbar {...props} store={store} theme={theme} />
+  );
 
   return {
     initialize: ({ getEditorState, setEditorState, getEditorRef }) => {
@@ -28,14 +22,12 @@ export default (config = {}) => {
       store.updateItem('getEditorRef', getEditorRef);
     },
     // Re-Render the text-toolbar on selection change
-    onChange: (editorState) => {
+    onChange: editorState => {
       store.updateItem('selection', editorState.getSelection());
       return editorState;
     },
-    InlineToolbar: decorateComponentWithProps(Toolbar, toolbarProps),
+    InlineToolbar,
   };
 };
 
-export {
-  Separator,
-};
+export { Separator };

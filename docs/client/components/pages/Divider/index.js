@@ -76,7 +76,8 @@ export default class App extends Component {
             Please help, by submiting a Pull Request to the{' '}
             <ExternalLink href="https://github.com/draft-js-plugins/draft-js-plugins/blob/master/docs/client/components/pages/Image/index.js">
               documentation
-            </ExternalLink>.
+            </ExternalLink>
+            .
           </p>
         </AlternateContainer>
         <Container>

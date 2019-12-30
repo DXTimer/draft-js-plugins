@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin';
-import unionClassNames from 'union-class-names';
+import clsx from 'clsx';
 import 'prismjs/themes/prism.css';
 import styles from './styles.css';
 
 export default class InlineCode extends Component {
-
   static propTypes = {
     code: PropTypes.string,
   };
@@ -15,7 +14,7 @@ export default class InlineCode extends Component {
 
   render() {
     const { className } = this.props;
-    const combinedRootClassName = unionClassNames(styles.root, className);
+    const combinedRootClassName = clsx(styles.root, className);
     return (
       <span className={combinedRootClassName}>
         <code
