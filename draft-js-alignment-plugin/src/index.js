@@ -48,7 +48,7 @@ export default (config = {}) => {
       const alignmentData = entityKey ? contentState.getEntity(entityKey).data : {};
       return {
         props: {
-          alignment: alignmentData.alignment || 'default',
+          alignment: alignmentData.alignment || 'center',
           setAlignment: createSetAlignment(contentBlock, { getEditorState, setEditorState }),
         },
       };
